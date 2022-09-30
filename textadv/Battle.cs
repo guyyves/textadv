@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace textadv
 {
-    class Battle
+    public class Battle
     {
         static Random rand = new Random();
         // BattleDefault
@@ -33,17 +33,27 @@ namespace textadv
             Console.ReadKey();
             Battles(false,"Gurg de Huidloper", 5, 2);
         }
+        public static void FurryBattle()
+        {
+            Console.Clear();
+            Console.WriteLine("Lorem");
+            Console.ReadKey();
+            Battles(false, "Furry de Wolf", 7, 1);
+        }
         // BattleTools
 
         public static void randomBattle()
         {
-            switch(rand.Next(0,2))
+            switch(rand.Next(0,3))
             {
                 case 0:
                     BasicBattle();
                     break;
                 case 1:
                     GurgBattle();
+                    break;
+                case 2:
+                    FurryBattle();
                     break;
             }
              
@@ -56,8 +66,8 @@ namespace textadv
             if(random)
             {
                 n = GetName();
-                p = rand.Next(1,5);
-                h = rand.Next(1, 8);
+                p = Program.player.GetPower();
+                h = Program.player.GetHealth();
             }
             else
             {
@@ -112,12 +122,15 @@ namespace textadv
                         if (damage < 0)
                             damage = 0;
                         Console.WriteLine("je verliest "+damage+" health");
+                        Program.player.health -= damage;
                         Console.ReadKey();
-                        //ga naar de store
+                        
                     }
                     else
                     {
                         Console.WriteLine("Het is je gelukt om te ontsnappen van "+n);
+                        Console.ReadKey();
+                        Shop.LoadShop(Program.player);
                     }
                 }
                 else if (input.ToLower() == "h" || input.ToLower() == "heal")
